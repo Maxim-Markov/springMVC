@@ -5,10 +5,10 @@
     <title>user info</title>
 </head>
 <body>
-<p th:text="${user.getName()}"></p>
-<p th:text="${user.getLastName()}"></p>
-<p th:text="${user.getAge()}"></p>
-<p th:text="${user.getId()}"></p>
+<p th:utext="#{user.name(${user.getName()})}">Name: Vasya</p>
+<p th:utext="#{user.lastName(${user.getLastName()})}">LastName: Ivanov</p>
+<p th:utext="#{user.age(${user.getAge()})}">Age: 18</p>
+<p th:utext="#{user.id(${user.getId()})}">Id: 40</p>
 <form th:action="@{/users/{id}/edit(id=${user.getId()})}">
     <input type="submit"  value="Edit"/>
 </form>

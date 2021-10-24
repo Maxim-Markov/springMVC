@@ -9,8 +9,8 @@
     <th:block th:each="user : ${users}">
         <h1>
             <a th:href = "@{/users/{id}(id=${user.getId()})}"
-            th:text="${user.getName()}">
-            user
+            th:text="#{user.info(${user.getName()},${user.getLastName()})}">
+            Name: Vasya, last name: Ivanov
             </a>
         </h1>
     </th:block>
