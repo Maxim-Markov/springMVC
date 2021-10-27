@@ -23,7 +23,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring.version>5.2.0.RELEASE</spring.version>
+        <spring.version>5.3.11</spring.version>
     </properties>
 
     <dependencies>
@@ -36,25 +36,25 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>${spring.version}</version>
+            <version>5.5.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring.version}</version>
+            <version>5.5.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.0.9.RELEASE</version>
+            <version>3.0.12.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.0</version>
+            <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
