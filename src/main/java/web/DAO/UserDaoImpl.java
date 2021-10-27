@@ -2,6 +2,7 @@ package web.DAO;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
@@ -16,71 +17,58 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
 
     @Autowired
-    public void setSessionFactory(EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
+    public void setEntityManager(@Qualifier("entityManagerBean") EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
     public void createUser(User user) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
+        entityManager.persist(user);
+        entityManager.joinTransaction();
         System.out.println("User с именем – " + user.getName() + " добавлен в базу данных");
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<User> getUsers() {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        List<User> users = em.createQuery("from User").getResultList();
-        em.close();
-        return users;
+        return (List<User>) entityManager.createQuery("from User").getResultList();
     }
 
     @Override
     public User getUser(long id) {
-
-        EntityManager em = entityManagerFactory.createEntityManager();
-        User user = em.find(User.class, id);
-        em.close();
-        return user;
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public void updateUser(long id, User user) {
-
-        EntityManager em = entityManagerFactory.createEntityManager();
-        CriteriaBuilder builder = em.getCriteriaBuilder();
+       /* CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<User> criteria = builder.createCriteriaUpdate(User.class);
         Root<User> root = criteria.from(User.class);
         criteria.set(root.get("name"), user.getName());
         criteria.set(root.get("lastName"), user.getLastName());
         criteria.set(root.get("age"), user.getAge());
         criteria.where(builder.equal(root.get("id"), id));
-        Query query = em.createQuery(criteria);
-        em.joinTransaction();
-        query.executeUpdate();
-//           User userFromDB = em.find(User.class, id);
-//        if (userFromDB != null) {
-//            userFromDB.setName("fef");
-//        }
-        em.close();
-        System.out.println("f");
+        Query query = entityManager.createQuery(criteria);
+        entityManager.joinTransaction();
+        query.executeUpdate();*/
+           User userFromDB = entityManager.find(User.class, id);
+        if (userFromDB != null) {
+            userFromDB.setName(user.getName());
+            userFromDB.setLastName(user.getLastName());
+            userFromDB.setAge(user.getAge());
+        }
     }
 
     @Override
     public void deleteUser(long id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        User userFromDB = em.find(User.class, id);
-        em.joinTransaction();
+        User userFromDB = entityManager.find(User.class, id);
+        entityManager.joinTransaction();
         if (userFromDB != null) {
-            em.remove(userFromDB);
+            entityManager.remove(userFromDB);
         }
-        em.close();
 
     }
 
