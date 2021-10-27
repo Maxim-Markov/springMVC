@@ -60,6 +60,7 @@ public class UserDaoImpl implements UserDao {
             userFromDB.setLastName(user.getLastName());
             userFromDB.setAge(user.getAge());
         }
+        entityManager.joinTransaction();
     }
 
     @Override
