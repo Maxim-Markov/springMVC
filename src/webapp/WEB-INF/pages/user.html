@@ -6,22 +6,20 @@
 </head>
 <body>
 <table>
-    <th>
+    <tr>
         <td>Id</td>
         <td>Name</td>
         <td>Last name</td>
         <td>Age</td>
-        <td>Role</td>
-    </th>
-    <tr th:object="user">
-        <td>${id}</td>
-        <td>${name}</td>
-        <td>${lastName}</td>
-        <td>${age}</td>
-        <td>${}</td>
+        <td>Roles</td>
     </tr>
-
-
+    <tr>
+        <td th:text="${user.getId()}">Id</td>
+        <td th:text="${user.getUsername()}">Maxim</td>
+        <td th:text="${user.getLastName()}">Markov</td>
+        <td th:text="${user.getAge()}">14</td>
+        <td th:each="role : ${user.getRoles()}" th:text="role, ">ROLE_USER, ROLE_ADMIN</td>
+    </tr>
 </table>
 </body>
 </html>

@@ -1,11 +1,10 @@
-package jm.security.example.dao;
+package jm.security.example.service;
 
 import jm.security.example.model.User;
 
 import java.util.List;
 
-public interface UserDao {
-    User getUserByName(String name);
+public interface UserService {
     void createUser(User user);
 
     List<User> getUsers();
