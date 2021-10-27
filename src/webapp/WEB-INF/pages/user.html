@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en" >
 <head>
     <meta charset="UTF-8">
     <title>Hello user</title>
 </head>
 <body>
-<div>
-    <p>Hello User, this Spring Security example</p>
-</div>
+<table>
+    <th>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Last name</td>
+        <td>Age</td>
+        <td>Role</td>
+    </th>
+    <tr th:object="user">
+        <td>${id}</td>
+        <td>${name}</td>
+        <td>${lastName}</td>
+        <td>${age}</td>
+        <td>${}</td>
+    </tr>
+
+
+</table>
 </body>
 </html>

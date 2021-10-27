@@ -1,6 +1,11 @@
 package jm.security.example.controller;
 
+import jm.security.example.model.User;
+import jm.security.example.service.UserDetailsServiceImpl;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,7 +24,14 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public String getUserPage() {
+    public String getUserPage(@AuthenticationPrincipal User user, ModelMap modelMap) {
+        modelMap.addAttribute("user",user);
         return "user";
     }
+
+    @GetMapping(value = "/admin")
+    public String getAdminPage() {
+        return "admin";
+    }
+
 }
