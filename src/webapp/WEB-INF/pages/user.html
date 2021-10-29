@@ -11,6 +11,8 @@
         <td>Name</td>
         <td>Last name</td>
         <td>Age</td>
+        <td>Email</td>
+        <td>Password</td>
         <td>Roles</td>
     </tr>
     <tr>
@@ -18,7 +20,9 @@
         <td th:text="${user.getUsername()}">Maxim</td>
         <td th:text="${user.getLastName()}">Markov</td>
         <td th:text="${user.getAge()}">14</td>
-        <td th:each="role : ${user.getRoles()}" th:text="role, ">ROLE_USER, ROLE_ADMIN</td>
+        <td th:text="${user.getEmail()}">test@gmail.com</td>
+        <td th:text="${user.getPassword()}">pass123</td>
+        <td th:each="role,iter : ${user.getRoles()}" th:text="${role.role}+(${!iter.last} ? ', ' : '')">ROLE_USER, ROLE_ADMIN</td>
     </tr>
 </table>
 </body>

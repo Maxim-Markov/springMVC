@@ -1,11 +1,12 @@
 package jm.security.example.controller;
 
+
 import jm.security.example.model.User;
-import jm.security.example.service.UserDetailsServiceImpl;
 import jm.security.example.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-    @GetMapping(value = "/")
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping()
     public String getUserPage(@AuthenticationPrincipal User user, ModelMap modelMap) {
-        UserDetails user2 = new UserDetailsServiceImpl().loadUserByUsername(user.getUsername());
-        modelMap.addAttribute("user",user2);
+        User userFromDB = (User) userService.loadUserByUsername(user.getUsername());
+        modelMap.addAttribute("user", userFromDB);
         return "user";
     }
 }

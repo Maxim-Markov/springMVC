@@ -3,27 +3,42 @@ package jm.security.example.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 // Этот класс реализует интерфейс GrantedAuthority, в котором необходимо переопределить только один метод getAuthority() (возвращает имя роли).
 // Имя роли должно соответствовать шаблону: «ROLE_ИМЯ», например, ROLE_USER.
 @Entity
-@Table(name = "roles")
+@Table(name = "roles",uniqueConstraints = @UniqueConstraint(columnNames = "role"))
 public class Role implements GrantedAuthority {
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Id
     private String role;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    private Set<User> users;
 
-    public Role(Long id, String role) {
-        this.id = id;
+    public Role(String role) {
         this.role = role;
+        users = new HashSet<>();
     }
 
     public Role() {
+        users = new HashSet<>();
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+        user.getRoles().add(this);
     }
 
     public Long getId() {
