@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
@@ -47,11 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Необходимо для шифрования паролей
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put("bcrypt", new BCryptPasswordEncoder());
-        encoders.put("scrypt", new SCryptPasswordEncoder());
-        return new DelegatingPasswordEncoder(
-                "bcrypt", encoders);
+    public NoOpPasswordEncoder passwordEncoder() {
+       return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 }
